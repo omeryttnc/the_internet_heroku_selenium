@@ -11,19 +11,25 @@ import utilities.ReusableMethods;
 public class deneme {
     HomePage homePage = new HomePage();
 
-    @Test
-    public void name() {
-        System.out.println("ssss");
+    @BeforeTest
+    public void setup() {
+
+        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
+        ReusableMethods.waitForPageToLoad(10);
+        ReusableMethods.waitFor(5);
     }
 
     @Test
     public void a() {
-        Driver.getDriver().get(ConfigurationReader.getProperty("url"));
-        ReusableMethods.waitForPageToLoad(10);
-        ReusableMethods.waitFor(5);
         homePage.AB_Testing.click();
         ReusableMethods.waitForPageToLoad(10);
         ReusableMethods.waitFor(5);
-        Assert.assertEquals(homePage.title.getText(), "A/B Test Variation 1" );
+        Assert.assertEquals(homePage.title.getText(), "A/B Test Variation 1"); // validation degisebiliyor
+    }
+
+    @AfterTest
+    public void tear() {
+        Driver.getDriver().close();
+
     }
 }
